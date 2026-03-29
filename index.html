@@ -7,7 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- html2pdf library for resume download (kept for compatibility, but button now uses PDF file) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
+        /* Your existing styles (unchanged) */
         :root {
             --primary: #6366f1;
             --secondary: #a855f7;
@@ -461,6 +464,18 @@
                 max-height: 180px;
             }
         }
+        /* Hidden resume content for PDF generation (kept as is, but button now uses original PDF) */
+        #resume-export {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 800px;
+            background: white;
+            color: black;
+            font-family: 'Poppins', sans-serif;
+            padding: 40px;
+            z-index: -9999;
+        }
     </style>
 </head>
 <body>
@@ -485,7 +500,8 @@
         <h1>Crafting Digital <br><span>Solutions.</span></h1>
         <p>B.Tech CSE student at LPU | DSA Enthusiast | Full Stack Developer. I build interactive applications and solve real-world problems with clean code.</p>
         <div style="display: flex; gap: 18px; flex-wrap: wrap;">
-            <a href="#" class="btn btn-main" download><i class="fas fa-download"></i> Resume</a>
+            <!-- FIXED: Resume button now downloads the provided PDF file (12320094 (1).pdf) -->
+            <a href="javascript:void(0);" class="btn btn-main" id="downloadResumeBtn"><i class="fas fa-download"></i> Resume</a>
             <a href="#contact" class="btn" style="border: 1px solid var(--primary); color: white;">Let's Talk</a>
         </div>
     </div>
@@ -674,6 +690,40 @@
 </section>
 <footer><p>© 2025 Hitesh Thakur — Built with <i class="fas fa-heart" style="color: #f472b6;"></i> for placements & innovation</p></footer>
 
+<!-- Hidden resume content for PDF generation (kept untouched) -->
+<div id="resume-export">
+    <div style="font-family: 'Poppins', sans-serif; max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; color: #111;">
+        <h1 style="color:#0f172a; border-bottom: 2px solid #6366f1; display: inline-block;">Hitesh Thakur</h1>
+        <p><i class="fas fa-envelope"></i> ht790767@gmail.com | 📞 +91-8699579833 | <i class="fab fa-linkedin"></i> linkedin.com/in/contacthitesh | <i class="fab fa-github"></i> github.com/HiteshTh</p>
+        <h3>📌 Education</h3>
+        <p><strong>Lovely Professional University</strong> – B.Tech CSE (2023-2027) CGPA: 6.18<br>
+        <strong>S.D Senior Secondary School, Hoshiarpur</strong> – Intermediate (XII): 84.8%<br>
+        <strong>B.B.M.B D.A.V School, Hoshiarpur</strong> – Matriculation (X): 83%</p>
+        <h3>💻 Skills</h3>
+        <p><strong>Languages:</strong> C++, JavaScript, C, HTML5, CSS<br>
+        <strong>Frameworks:</strong> NodeJS<br>
+        <strong>Tools/Platforms:</strong> AWS Cloud, Git & GitHub<br>
+        <strong>Soft Skills:</strong> Problem-Solving, Time-Management, Team Player, Adaptability</p>
+        <h3>🚀 Projects</h3>
+        <p><strong>Shoe Kart – E‑Commerce Web Application</strong> (Jan 2026 – Feb 2026)<br>
+        Multi-category e‑commerce with dynamic filtering, real‑time search, and persistent cart using localStorage. Built responsive UI with CSS Grid/Flexbox. (HTML5, CSS3, JavaScript)<br>
+        <strong>Pathfinding Visualizer – Interactive Algorithm Simulation Tool</strong> (Aug 2024 – Sep 2024)<br>
+        Visualized Dijkstra, A*, BFS, DFS on interactive grid with real‑time animations. Engineered async animation using Promises/Async-Await. (HTML5, CSS3, JavaScript, Algorithms)<br>
+        <strong>Student CGPA Predictor</strong> (DSA Training Project)<br>
+        Predicts future CGPA based on attendance and study hours using optimized data structures (C++).</p>
+        <h3>📜 Training & Certifications</h3>
+        <p><strong>Basics of Data Structures and Algorithms</strong> – Lovely Professional University (June 2025 – July 2025)<br>
+        • ChatGPT-4 Prompt Engineering – Infosys (Aug 2025)<br>
+        • Build Generative AI Apps and Solutions with No-Code Tools – Infosys (Aug 2025)<br>
+        • AWS Academy Cloud Foundations – AWS (Apr 2025)<br>
+        • Deep Learning – NPTEL (Apr 2025)<br>
+        • The Bits and Bytes of Computer Networking – Coursera (Sep 2024)<br>
+        • Introduction to Hardware and Operating Systems – Coursera (Sep 2024)</p>
+        <h3>🏆 Extracurricular</h3>
+        <p>Participated in Hackathon: Web का Hackathon (March 2024) – cross-functional team, built working prototype.</p>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
@@ -684,6 +734,19 @@
         interactivity: { detect_on: 'canvas', events: { onhover: { enable: true, mode: 'repulse' } } }
     });
     VanillaTilt.init(document.querySelectorAll(".profile-card, .project-card, .cert-card, .training-card"), { max: 8, speed: 300, glare: true, "max-glare": 0.15 });
+    
+    // Fixed Resume download: forces download of local PDF (resume.pdf → Hitesh_Thakur_Resume.pdf)
+    document.getElementById('downloadResumeBtn').addEventListener('click', function() {
+        const link = document.createElement('a');
+        link.href = 'resume.pdf';
+        link.download = 'Hitesh_Thakur_Resume.pdf';
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(link.href);
+    });
+
 </script>
 </body>
 </html>
